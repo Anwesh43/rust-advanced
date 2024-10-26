@@ -1,4 +1,4 @@
-use std::{io::stdin, num::ParseIntError};
+use std::{io::{stdin, Read}, num::ParseIntError};
 
 struct Animal {
     name: String, age: i64 
@@ -23,6 +23,13 @@ fn parse_num(input_age : String) -> Result<i64, ParseIntError> {
     let ageNum = input_age.parse::<i64>()?;
     Ok(ageNum)
 }
+
+fn read_line_input() -> String {
+    let mut input : String = String::new();
+    stdin().read_line( &mut input).expect("Can't read input");
+    input
+}
+
 fn main() {
     println!("Hello, world!");
     let animal = Animal { name: "Dog".to_string(), age: 2 };
@@ -30,11 +37,11 @@ fn main() {
     let mut animal2 : Animal = animal.new();
     animal2.doubleAge();
     animal2.display();
-    let mut inputName: String = String::new();
-    let mut inputAge : String = String::new(); 
-    stdin().read_line(&mut inputName).expect("Failed to read line");
+    let mut inputName: String = read_line_input();
+    let mut inputAge : String = read_line_input(); 
+    // stdin().read_line(&mut inputName).expect("Failed to read line");
     println!("Got name enter age");
-    stdin().read_line(&mut inputAge).expect("Failed to read line");
+    // stdin().read_line(&mut inputAge).expect("Failed to read line");
     let age_num_result = parse_num(inputAge);
     match age_num_result {
         Ok(age) => {
