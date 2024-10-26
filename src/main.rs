@@ -27,7 +27,7 @@ fn parse_num(input_age : String) -> Result<i64, ParseIntError> {
 fn read_line_input() -> String {
     let mut input : String = String::new();
     stdin().read_line( &mut input).expect("Can't read input");
-    input
+    input.trim().to_string()
 }
 
 fn main() {
@@ -53,5 +53,18 @@ fn main() {
             let animal3 = Animal {name : inputName, age: 0};
             animal3.display();
         }
+    }
+    let visitors : [&str; 3] = ["An1", "An2", "An3"];
+    let inputVisitor = read_line_input();
+    let mut matched : bool = false;
+    for visitor in &visitors {
+        if visitor == &inputVisitor {
+            matched = true;
+        }
+    }
+    if matched {
+        println!("Input in present")
+    } else {
+        println!("Input is not present")
     }
 }
