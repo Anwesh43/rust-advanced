@@ -4,6 +4,7 @@ struct Animal {
     name: String, age: i64 
 }
 
+#[derive(Debug)]
 struct Visitor {
     name: String
 }
@@ -94,4 +95,16 @@ fn main() {
         Some(visitorCurr) => visitorCurr.greeting(),
         None => println!("Visitor not present")
     }
+
+    let mut vistior_list : Vec<Visitor> = vec![];
+    loop {
+
+        let name_input = read_line_input();
+        if name_input == "Quit".to_string() {
+            break;
+        }
+        vistior_list.push(Visitor::new(name_input));
+    }
+
+    vistior_list.iter().for_each(|v| v.greeting())
 }
