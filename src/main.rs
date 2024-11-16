@@ -5,18 +5,32 @@ struct Animal {
 }
 
 #[derive(Debug)]
+enum VisitorAction {
+    Accept,
+    Reject,
+    AcceptWithNote{note : String}
+}
+
+#[derive(Debug)]
 struct Visitor {
-    name: String
+    name: String,
+    action: VisitorAction,
 }
 
 impl Visitor {
     fn new(name : String) -> Self {
-        Self {name : name}
+        Self {name : name, action: VisitorAction::Accept}
     } 
 
     fn greeting(&self) {
-        println!("Hello {name}", name = self.name)
+        println!("Hello {name}", name = self.name);
+        match &self.action {
+            VisitorAction::Accept => println!("Accepted"),
+            VisitorAction::Reject => println!("Rejected"),
+            VisitorAction::AcceptWithNote { note } => println!("Accepted with {note}", note = note)
+        }
     }
+
 }
 
 impl Animal {
@@ -33,6 +47,7 @@ impl Animal {
         self.age = self.age * 2
     }
 }
+
 
 fn parse_num(input_age : String) -> Result<i64, ParseIntError> {
     let ageNum = input_age.parse::<i64>()?;
