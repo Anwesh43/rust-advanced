@@ -4,6 +4,20 @@ struct Animal {
     name: String, age: i64 
 }
 
+struct Visitor {
+    name: String
+}
+
+impl Visitor {
+    fn new(name : String) -> Self {
+        Self {name : name}
+    } 
+
+    fn greeting(&self) {
+        println!("Hello {name}", name = self.name)
+    }
+}
+
 impl Animal {
 
     fn new(&self) -> Animal {
@@ -56,15 +70,28 @@ fn main() {
     }
     let visitors : [&str; 3] = ["An1", "An2", "An3"];
     let inputVisitor = read_line_input();
+
+    let visitorStructs : [Visitor; 3] = [
+        Visitor::new(visitors[0].to_string()),
+        Visitor::new(visitors[1].to_string()),
+        Visitor::new(visitors[2].to_string()),
+    ];
+
     let mut matched : bool = false;
     for visitor in &visitors {
         if visitor == &inputVisitor {
             matched = true;
         }
     }
+    let matchedVisitor = visitorStructs.iter().find(|v| v.name == inputVisitor);
     if matched {
-        println!("Input in present")
+        println!("Input is present")
     } else {
         println!("Input is not present")
+    }
+
+    match matchedVisitor {
+        Some(visitorCurr) => visitorCurr.greeting(),
+        None => println!("Visitor not present")
     }
 }
